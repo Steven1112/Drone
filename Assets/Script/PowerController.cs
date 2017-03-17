@@ -29,6 +29,8 @@ public class PowerController : MonoBehaviour {
 			Oscillate ();
 		if (Input.GetKeyDown (KeyCode.Space) && isReady) 
 			StartCoroutine(Strike ());
+
+		Debug.Log (isStriking);
 	}
 
 	IEnumerator Strike() {

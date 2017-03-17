@@ -3,14 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class BombCollisionController : MonoBehaviour {
-	
+	public Transform readyBar;
+
 	public float speed;
-
-	private GameSystemManagement gameSystem;
-
-	void Awake() {
-		gameSystem = GameObject.Find ("GameManager").GetComponent<GameSystemManagement> ();
-	}
 
 	// Use this for initialization
 	void Start () {
@@ -26,18 +21,7 @@ public class BombCollisionController : MonoBehaviour {
 		if (collider.tag == "StrikePoints") {
 			Debug.Log ("Hit");
 			Destroy (gameObject, 0.2f);
-
-			float distance = Vector3.Distance (transform.position, collider.transform.position);
-			int kills = ConvertDistanceToKills (distance);
-
-			gameSystem.AddKills (kills);
-			Debug.Log (gameSystem.GetKills ());
-
 			Destroy (collider.gameObject, 0.2f);
 		}
-	}
-
-	int ConvertDistanceToKills(float distance) {
-		return (int)Mathf.Floor(distance * 100f);
 	}
 }
