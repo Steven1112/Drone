@@ -38,6 +38,6 @@ public class BombCollisionController : MonoBehaviour {
 	}
 
 	int ConvertDistanceToKills(float distance) {
-		return (int)Mathf.Floor(distance * 100f);
+		return (int)Mathf.Floor(100f/distance);
 	}
 }
