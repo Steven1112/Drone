@@ -83,6 +83,7 @@ public class AnimationManager : MonoBehaviour {
 			card.Play ("CardPopup");
 			cardState = 1;
 			StartCoroutine (WaitAnimationStart ());
+			email.transform.SetAsFirstSibling();
 			break;
 
 		case 1:
@@ -111,6 +112,7 @@ public class AnimationManager : MonoBehaviour {
 			email.Play ("EmailPopup");
 			emailState = 1;
 			StartCoroutine (WaitAnimationStart ());
+			email.transform.SetAsLastSibling();
 			break;
 
 		case 1:
@@ -123,6 +125,7 @@ public class AnimationManager : MonoBehaviour {
 			StrikeAStart.SetActive (false);
 			StrikeBStart.SetActive (false);
 			StrikeCStart.SetActive (false);
+			email.transform.SetAsFirstSibling();
 			break;
 
 		default:
@@ -223,9 +226,10 @@ public class AnimationManager : MonoBehaviour {
 			strikeAState = 0;
 			StrikeB.SetActive (true);
 			StrikeC.SetActive (true);
+			StrikeAStart.SetActive (false);
 			StrikeBStart.SetActive (false);
 			StrikeCStart.SetActive (false);
-			StartCoroutine(WaitStrikeAClose());
+			//StartCoroutine(WaitStrikeAClose());
 			break;
 
 		default:
@@ -254,8 +258,9 @@ public class AnimationManager : MonoBehaviour {
 			StrikeA.SetActive (true);
 			StrikeC.SetActive (true);
 			StrikeAStart.SetActive (false);
+			StrikeBStart.SetActive (false);
 			StrikeCStart.SetActive (false);
-			StartCoroutine(WaitStrikeBClose());
+			//StartCoroutine(WaitStrikeBClose());
 			break;
 
 		default:
@@ -285,7 +290,8 @@ public class AnimationManager : MonoBehaviour {
 			StrikeB.SetActive (true);
 			StrikeAStart.SetActive (false);
 			StrikeBStart.SetActive (false);
-			StartCoroutine(WaitStrikeCClose());
+			StrikeCStart.SetActive (false);
+			//StartCoroutine(WaitStrikeCClose());
 			break;
 
 		default:
@@ -306,32 +312,32 @@ public class AnimationManager : MonoBehaviour {
 	}
 
 	IEnumerator WaitStrikeAStart(){
-		yield return new WaitForSeconds(1);
+		yield return new WaitForSeconds(0.5f);
 		StrikeAStart.SetActive (true);
 	}
 
 	IEnumerator WaitStrikeAClose(){
-		yield return new WaitForSeconds(1);
+		yield return new WaitForSeconds(0.5f);
 		StrikeAStart.SetActive (false);
 	}
 
 	IEnumerator WaitStrikeBStart(){
-		yield return new WaitForSeconds(1);
+		yield return new WaitForSeconds(0.5f);
 		StrikeBStart.SetActive (true);
 	}
 
 	IEnumerator WaitStrikeBClose(){
-		yield return new WaitForSeconds(1);
+		yield return new WaitForSeconds(0.5f);
 		StrikeBStart.SetActive (false);
 	}
 
 	IEnumerator WaitStrikeCStart(){
-		yield return new WaitForSeconds(1);
+		yield return new WaitForSeconds(0.5f);
 		StrikeCStart.SetActive (true);
 	}
 
 	IEnumerator WaitStrikeCClose(){
-		yield return new WaitForSeconds(1);
+		yield return new WaitForSeconds(0.5f);
 		StrikeCStart.SetActive (false);
 	}
 }
