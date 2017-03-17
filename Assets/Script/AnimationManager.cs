@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class AnimationManager : MonoBehaviour {
 
 	public Animator card;
+	public Animator email;
 	public Animator board;
 	public Animator monitor;
 	public Animator strikeA;
@@ -14,11 +15,13 @@ public class AnimationManager : MonoBehaviour {
 	public Animator map;
 
 	public GameObject missionOpen;
+	public GameObject emailOpen;
 	public GameObject boardZoom;
 	public GameObject monitorZoom;
 	public GameObject mapZoom;
 
 	private int cardState;
+	private int emailState;
 	private int boardState;
 	private int monitorState;
 	private int strikeAState;
@@ -37,6 +40,7 @@ public class AnimationManager : MonoBehaviour {
 	void Start () {
 
 		missionOpen = GameObject.Find ("Card");
+		emailOpen = GameObject.Find ("Email");
 		boardZoom =  GameObject.Find ("Board");
 		monitorZoom = GameObject.Find ("MonitorBottom");
 		mapZoom = GameObject.Find ("Map");
@@ -48,6 +52,7 @@ public class AnimationManager : MonoBehaviour {
 		StrikeCStart = GameObject.Find ("StrikeCStart");
 
 		card = missionOpen.GetComponent<Animator>();
+		email = emailOpen.GetComponent<Animator>();
 		board = boardZoom.GetComponent<Animator>();
 		monitor = monitor.GetComponent<Animator>();
 		strikeA = StrikeA.GetComponent<Animator>();
@@ -61,6 +66,8 @@ public class AnimationManager : MonoBehaviour {
 		StrikeAStart.SetActive (false);
 		StrikeBStart.SetActive (false);
 		StrikeCStart.SetActive (false);
+		missionOpen.SetActive (false);
+		emailOpen.SetActive (false);
 	}
 
 	// Update is called once per frame
@@ -76,13 +83,49 @@ public class AnimationManager : MonoBehaviour {
 			card.Play ("CardPopup");
 			cardState = 1;
 			StartCoroutine (WaitAnimationStart ());
-			missionOpen.transform.SetAsLastSibling();
+			email.transform.SetAsFirstSibling();
 			break;
 
 		case 1:
 			card.Play ("CardClosed");
 			cardState = 0;
 			StartCoroutine(WaitAnimationClose());
+			StrikeA.SetActive (false);
+			StrikeB.SetActive (false);
+			StrikeC.SetActive (false);
+			StrikeAStart.SetActive (false);
+			StrikeBStart.SetActive (false);
+			StrikeCStart.SetActive (false);
+			break;
+
+		default:
+			break;
+
+		}
+	}
+
+	public void EmailPopupPlay(){
+
+		switch (emailState)
+		{
+		case 0:
+			email.Play ("EmailPopup");
+			emailState = 1;
+			StartCoroutine (WaitAnimationStart ());
+			email.transform.SetAsLastSibling();
+			break;
+
+		case 1:
+			email.Play ("EmailClosed");
+			emailState = 0;
+			StartCoroutine(WaitAnimationClose());
+			StrikeA.SetActive (false);
+			StrikeB.SetActive (false);
+			StrikeC.SetActive (false);
+			StrikeAStart.SetActive (false);
+			StrikeBStart.SetActive (false);
+			StrikeCStart.SetActive (false);
+			email.transform.SetAsFirstSibling();
 			break;
 
 		default:
@@ -141,11 +184,21 @@ public class AnimationManager : MonoBehaviour {
 			monitor.Play ("MonitorZoomIn");
 			monitorZoom.transform.SetAsLastSibling();
 			monitorState = 1;
+			missionOpen.SetActive (true);
+			emailOpen.SetActive (true);
 			break;
 
 		case 1:
 			monitor.Play ("MonitorZoomOut");
 			monitorState = 0;
+			missionOpen.SetActive (false);
+			emailOpen.SetActive (false);
+			StrikeA.SetActive (false);
+			StrikeB.SetActive (false);
+			StrikeC.SetActive (false);
+			StrikeAStart.SetActive (false);
+			StrikeBStart.SetActive (false);
+			StrikeCStart.SetActive (false);
 			break;
 
 		default:
@@ -173,9 +226,10 @@ public class AnimationManager : MonoBehaviour {
 			strikeAState = 0;
 			StrikeB.SetActive (true);
 			StrikeC.SetActive (true);
+			StrikeAStart.SetActive (false);
 			StrikeBStart.SetActive (false);
 			StrikeCStart.SetActive (false);
-			StartCoroutine(WaitStrikeAClose());
+			//StartCoroutine(WaitStrikeAClose());
 			break;
 
 		default:
@@ -204,8 +258,9 @@ public class AnimationManager : MonoBehaviour {
 			StrikeA.SetActive (true);
 			StrikeC.SetActive (true);
 			StrikeAStart.SetActive (false);
+			StrikeBStart.SetActive (false);
 			StrikeCStart.SetActive (false);
-			StartCoroutine(WaitStrikeBClose());
+			//StartCoroutine(WaitStrikeBClose());
 			break;
 
 		default:
@@ -235,7 +290,8 @@ public class AnimationManager : MonoBehaviour {
 			StrikeB.SetActive (true);
 			StrikeAStart.SetActive (false);
 			StrikeBStart.SetActive (false);
-			StartCoroutine(WaitStrikeCClose());
+			StrikeCStart.SetActive (false);
+			//StartCoroutine(WaitStrikeCClose());
 			break;
 
 		default:
@@ -253,38 +309,35 @@ public class AnimationManager : MonoBehaviour {
 
 	IEnumerator WaitAnimationClose(){
 		yield return new WaitForSeconds(1);
-		StrikeA.SetActive (false);
-		StrikeB.SetActive (false);
-		StrikeC.SetActive (false);
 	}
 
 	IEnumerator WaitStrikeAStart(){
-		yield return new WaitForSeconds(1);
+		yield return new WaitForSeconds(0.5f);
 		StrikeAStart.SetActive (true);
 	}
 
 	IEnumerator WaitStrikeAClose(){
-		yield return new WaitForSeconds(1);
+		yield return new WaitForSeconds(0.5f);
 		StrikeAStart.SetActive (false);
 	}
 
 	IEnumerator WaitStrikeBStart(){
-		yield return new WaitForSeconds(1);
+		yield return new WaitForSeconds(0.5f);
 		StrikeBStart.SetActive (true);
 	}
 
 	IEnumerator WaitStrikeBClose(){
-		yield return new WaitForSeconds(1);
+		yield return new WaitForSeconds(0.5f);
 		StrikeBStart.SetActive (false);
 	}
 
 	IEnumerator WaitStrikeCStart(){
-		yield return new WaitForSeconds(1);
+		yield return new WaitForSeconds(0.5f);
 		StrikeCStart.SetActive (true);
 	}
 
 	IEnumerator WaitStrikeCClose(){
-		yield return new WaitForSeconds(1);
+		yield return new WaitForSeconds(0.5f);
 		StrikeCStart.SetActive (false);
 	}
 }
