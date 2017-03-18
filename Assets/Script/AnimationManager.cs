@@ -23,6 +23,8 @@ public class AnimationManager : MonoBehaviour {
 	public GameObject introEmail;
 	public GameObject evaluateEmailButton;
 	public GameObject evaluateEmail;
+	public GameObject closeEmailButton;
+	public GameObject closeTaskButton;
 
 	private int cardState;
 	private int emailState;
@@ -60,6 +62,8 @@ public class AnimationManager : MonoBehaviour {
 		introEmail = GameObject.Find ("IntroEmail");
 		evaluateEmailButton = GameObject.Find ("EvaluateEmailButton");
 		evaluateEmail = GameObject.Find ("EvaluateEmail");
+		closeEmailButton = GameObject.Find ("EmailCloseButton");
+		closeTaskButton = GameObject.Find ("TaskCloseButton");
 
 		card = missionOpen.GetComponent<Animator>();
 		email = emailOpen.GetComponent<Animator>();
@@ -82,6 +86,8 @@ public class AnimationManager : MonoBehaviour {
 		introEmail.SetActive (false);
 		evaluateEmailButton.SetActive (false);
 		evaluateEmail.SetActive (false);
+		closeEmailButton.SetActive (false);
+		closeTaskButton.SetActive (false);
 	}
 
 	// Update is called once per frame
@@ -133,6 +139,8 @@ public class AnimationManager : MonoBehaviour {
 			email.Play ("EmailClosed");
 			emailState = 0;
 			introEmailButton.SetActive (false);
+			closeEmailButton.SetActive (false);
+			closeTaskButton.SetActive (false);
 			StartCoroutine(WaitEmailAnimationClose());
 			StrikeA.SetActive (false);
 			StrikeB.SetActive (false);
@@ -171,6 +179,8 @@ public class AnimationManager : MonoBehaviour {
 			StrikeAStart.SetActive (false);
 			StrikeBStart.SetActive (false);
 			StrikeCStart.SetActive (false);
+			closeEmailButton.SetActive (false);
+			closeTaskButton.SetActive (false);
 			break;
 
 		default:
@@ -246,6 +256,8 @@ public class AnimationManager : MonoBehaviour {
 			StrikeCStart.SetActive (false);
 			introEmailButton.SetActive (false);
 			introEmail.SetActive (false);
+			closeEmailButton.SetActive (false);
+			closeTaskButton.SetActive (false);
 			evaluateEmailButton.SetActive (false);
 			evaluateEmail.SetActive (false);
 			break;
@@ -356,11 +368,14 @@ public class AnimationManager : MonoBehaviour {
 		case 0:
 			introEmailButtonState = 1;
 			introEmail.SetActive (true);
+			//closeEmailButton.SetActive (true);
+			//closeEmailButton.transform.SetAsLastSibling();
 			break;
 
 		case 1:
 			introEmailButtonState = 0;
 			introEmail.SetActive (false);
+			//closeEmailButton.SetActive (false);
 			break;
 
 		default:
@@ -376,11 +391,14 @@ public class AnimationManager : MonoBehaviour {
 		case 0:
 			evaluateEmailButtonState = 1;
 			evaluateEmail.SetActive (true);
+			//closeEmailButton.SetActive (true);
+			//closeEmailButton.transform.SetAsLastSibling();
 			break;
 
 		case 1:
 			evaluateEmailButtonState = 0;
 			evaluateEmail.SetActive (false);
+			//closeEmailButton.SetActive (false);
 			break;
 
 		default:
@@ -389,17 +407,46 @@ public class AnimationManager : MonoBehaviour {
 		}
 	}
 
+	public void CloseEmailPopupPlay(){
+		introEmail.SetActive (false);
+		evaluateEmail.SetActive (false);
+		closeEmailButton.SetActive (false);
+		closeTaskButton.SetActive (false);
+
+		email.Play ("EmailClosed");
+		emailState = 0;
+		introEmailButton.SetActive (false);
+		evaluateEmailButton.SetActive (false);
+	}
+
+	public void CloseTaskPopupPlay(){
+		closeTaskButton.SetActive (false);
+
+		card.Play ("CardClosed");
+		cardState = 0;
+		StrikeA.SetActive (false);
+		StrikeB.SetActive (false);
+		StrikeC.SetActive (false);
+		StrikeAStart.SetActive (false);
+		StrikeBStart.SetActive (false);
+		StrikeCStart.SetActive (false);
+	}
+
 	IEnumerator WaitAnimationStart(){
 		yield return new WaitForSeconds(1);
 		StrikeA.SetActive (true);
 		StrikeB.SetActive (true);
 		StrikeC.SetActive (true);
+		closeTaskButton.SetActive (true);
+		closeTaskButton.transform.SetAsLastSibling();
 	}
 
 	IEnumerator WaitEmailAnimationStart(){
 		yield return new WaitForSeconds (1);
 		introEmailButton.transform.SetAsLastSibling();
 		introEmailButton.SetActive (true);
+		closeEmailButton.SetActive (true);
+		closeEmailButton.transform.SetAsLastSibling();
 	}
 
 	IEnumerator WaitEmailScene3AnimationStart(){
@@ -408,6 +455,8 @@ public class AnimationManager : MonoBehaviour {
 		introEmailButton.SetActive (true);
 		evaluateEmailButton.transform.SetAsLastSibling();
 		evaluateEmailButton.SetActive (true);
+		closeEmailButton.SetActive (true);
+		closeEmailButton.transform.SetAsLastSibling();
 	}
 
 
