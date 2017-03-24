@@ -43,6 +43,7 @@ public class AnimationManager : MonoBehaviour {
 	public GameObject StrikeAStart;
 	public GameObject StrikeBStart;
 	public GameObject StrikeCStart;
+	public GameObject weblinkButton;
 
 	// Use this for initialization
 	void Start () {
@@ -64,6 +65,7 @@ public class AnimationManager : MonoBehaviour {
 		evaluateEmail = GameObject.Find ("EvaluateEmail");
 		closeEmailButton = GameObject.Find ("EmailCloseButton");
 		closeTaskButton = GameObject.Find ("TaskCloseButton");
+		weblinkButton = GameObject.Find ("WeblinkButton");
 
 		card = missionOpen.GetComponent<Animator>();
 		email = emailOpen.GetComponent<Animator>();
@@ -88,6 +90,7 @@ public class AnimationManager : MonoBehaviour {
 		evaluateEmail.SetActive (false);
 		closeEmailButton.SetActive (false);
 		closeTaskButton.SetActive (false);
+		weblinkButton.SetActive (false);
 	}
 
 	// Update is called once per frame
@@ -109,13 +112,14 @@ public class AnimationManager : MonoBehaviour {
 		case 1:
 			card.Play ("CardClosed");
 			cardState = 0;
-			StartCoroutine(WaitAnimationClose());
+			StartCoroutine (WaitAnimationClose ());
 			StrikeA.SetActive (false);
 			StrikeB.SetActive (false);
 			StrikeC.SetActive (false);
 			StrikeAStart.SetActive (false);
 			StrikeBStart.SetActive (false);
 			StrikeCStart.SetActive (false);
+			closeTaskButton.SetActive (false);
 			break;
 
 		default:
@@ -391,6 +395,7 @@ public class AnimationManager : MonoBehaviour {
 		case 0:
 			evaluateEmailButtonState = 1;
 			evaluateEmail.SetActive (true);
+			weblinkButton.SetActive (true);
 			//closeEmailButton.SetActive (true);
 			//closeEmailButton.transform.SetAsLastSibling();
 			break;
@@ -398,6 +403,7 @@ public class AnimationManager : MonoBehaviour {
 		case 1:
 			evaluateEmailButtonState = 0;
 			evaluateEmail.SetActive (false);
+			weblinkButton.SetActive (false);
 			//closeEmailButton.SetActive (false);
 			break;
 
@@ -412,11 +418,13 @@ public class AnimationManager : MonoBehaviour {
 		evaluateEmail.SetActive (false);
 		closeEmailButton.SetActive (false);
 		closeTaskButton.SetActive (false);
+		weblinkButton.SetActive (false);
 
 		email.Play ("EmailClosed");
 		emailState = 0;
 		introEmailButton.SetActive (false);
 		evaluateEmailButton.SetActive (false);
+		weblinkButton.SetActive (false);
 	}
 
 	public void CloseTaskPopupPlay(){

@@ -13,6 +13,10 @@ public class OpenURL : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
+	}
+
+	public void ActiveURL(){
 		Application.OpenURL(webLinkName);
 	}
 }
