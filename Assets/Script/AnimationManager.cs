@@ -13,6 +13,8 @@ public class AnimationManager : MonoBehaviour {
 	public Animator strikeB;
 	public Animator strikeC;
 	public Animator map;
+	public Animator scoreBoard;
+	public Animator newsBoard;
 
 	public GameObject missionOpen;
 	public GameObject emailOpen;
@@ -25,6 +27,9 @@ public class AnimationManager : MonoBehaviour {
 	public GameObject evaluateEmail;
 	public GameObject closeEmailButton;
 	public GameObject closeTaskButton;
+	public GameObject scoreButton;
+	public GameObject newsButton;
+	//public GameObject resignImage;
 
 	private int cardState;
 	private int emailState;
@@ -36,6 +41,8 @@ public class AnimationManager : MonoBehaviour {
 	private int mapState;
 	private int introEmailButtonState;
 	private int evaluateEmailButtonState;
+	private int scoreState;
+	private int newsState;
 
 	public GameObject StrikeA;
 	public GameObject StrikeB;
@@ -66,6 +73,9 @@ public class AnimationManager : MonoBehaviour {
 		closeEmailButton = GameObject.Find ("EmailCloseButton");
 		closeTaskButton = GameObject.Find ("TaskCloseButton");
 		weblinkButton = GameObject.Find ("WeblinkButton");
+		scoreButton = GameObject.Find ("ScoreButton");
+		newsButton = GameObject.Find ("NewsButton");
+		//resignImage = GameObject.Find ("ResignImage");
 
 		card = missionOpen.GetComponent<Animator>();
 		email = emailOpen.GetComponent<Animator>();
@@ -75,6 +85,8 @@ public class AnimationManager : MonoBehaviour {
 		strikeB = StrikeB.GetComponent<Animator>();
 		strikeC = StrikeC.GetComponent<Animator>();
 		map = mapZoom.GetComponent<Animator>();
+		scoreBoard = scoreButton.GetComponent<Animator>();
+		newsBoard = newsButton.GetComponent<Animator>();
 
 		StrikeA.SetActive (false);
 		StrikeB.SetActive (false);
@@ -91,6 +103,8 @@ public class AnimationManager : MonoBehaviour {
 		closeEmailButton.SetActive (false);
 		closeTaskButton.SetActive (false);
 		weblinkButton.SetActive (false);
+		scoreButton.SetActive (false);
+		newsButton.SetActive (false);
 	}
 
 	// Update is called once per frame
@@ -198,14 +212,272 @@ public class AnimationManager : MonoBehaviour {
 		switch (boardState)
 		{
 		case 0:
-			board.Play ("BoardZoomIn");
+			board.Play ("BoardIntialZoomIn");
 			boardState = 1;
 			boardZoom.transform.SetAsLastSibling();
 			break;
 
 		case 1:
+			board.Play ("BoardIntialZoomOut");
+			boardState = 0;
+			break;
+
+		default:
+			break;
+
+		}
+	}
+
+	public void BoardScene2PopupPlay(){
+
+		switch (boardState)
+		{
+		case 0:
+			board.Play ("BoardZoomIn");
+			boardState = 1;
+			boardZoom.transform.SetAsLastSibling();
+			scoreButton.transform.SetAsLastSibling();
+			newsButton.transform.SetAsLastSibling();
+			scoreButton.SetActive (true);
+			newsButton.SetActive (true);
+			StartCoroutine(WaitBoardPopup());
+			break;
+
+		case 1:
 			board.Play ("BoardZoomOut");
 			boardState = 0;
+			scoreButton.SetActive (false);
+			newsButton.SetActive (false);
+			break;
+
+		default:
+			break;
+
+		}
+	}
+
+	public void BoardScene3PopupPlay(){
+
+		switch (boardState)
+		{
+		case 0:
+			board.Play ("BoardBZoomIn");
+			boardState = 1;
+			boardZoom.transform.SetAsLastSibling();
+			scoreButton.transform.SetAsLastSibling();
+			newsButton.transform.SetAsLastSibling();
+			scoreButton.SetActive (true);
+			newsButton.SetActive (true);
+			StartCoroutine(WaitBoardPopup());
+			break;
+
+		case 1:
+			board.Play ("BoardBZoomOut");
+			boardState = 0;
+			scoreButton.SetActive (false);
+			newsButton.SetActive (false);
+			break;
+
+		default:
+			break;
+
+		}
+	}
+
+	public void BoardScene2CPopupPlay(){
+
+		switch (boardState)
+		{
+		case 0:
+			board.Play ("BoardCZoomIn");
+			boardState = 1;
+			boardZoom.transform.SetAsLastSibling();
+			scoreButton.transform.SetAsLastSibling();
+			newsButton.transform.SetAsLastSibling();
+			scoreButton.SetActive (true);
+			newsButton.SetActive (true);
+			StartCoroutine(WaitBoardPopup());
+			break;
+
+		case 1:
+			board.Play ("BoardCZoomOut");
+			boardState = 0;
+			scoreButton.SetActive (false);
+			newsButton.SetActive (false);
+			break;
+
+		default:
+			break;
+
+		}
+	}
+
+	public void BoardResignCPopupPlay(){
+
+		switch (boardState)
+		{
+		case 0:
+			board.Play ("BoardResignZoomIn");
+			boardState = 1;
+			boardZoom.transform.SetAsLastSibling();
+			newsButton.transform.SetAsLastSibling();
+			newsButton.SetActive (true);
+			StartCoroutine(WaitBoardPopup());
+			break;
+
+		case 1:
+			board.Play ("BoardResignZoomOut");
+			boardState = 0;
+			newsButton.SetActive (false);
+			break;
+
+		default:
+			break;
+
+		}
+	}
+
+	public void ScorePopupPlay(){
+
+		switch (scoreState)
+		{
+		case 0:
+			scoreBoard.Play ("ScoreZoomIn");
+			scoreButton.transform.SetAsLastSibling();
+			scoreState = 1;
+			break;
+
+		case 1:
+			scoreBoard.Play ("ScoreZoomOut");
+			scoreState = 0;
+			break;
+
+		default:
+			break;
+
+		}
+	}
+
+	public void ScoreScene3PopupPlay(){
+
+		switch (scoreState)
+		{
+		case 0:
+			scoreBoard.Play ("ScoreBZoomIn");
+			scoreButton.transform.SetAsLastSibling();
+			scoreState = 1;
+			break;
+
+		case 1:
+			scoreBoard.Play ("ScoreBZoomOut");
+			scoreState = 0;
+			break;
+
+		default:
+			break;
+
+		}
+	}
+
+	public void ScoreScene2CPopupPlay(){
+
+		switch (scoreState)
+		{
+		case 0:
+			scoreBoard.Play ("Score2CZoomIn");
+			scoreButton.transform.SetAsLastSibling();
+			scoreState = 1;
+			break;
+
+		case 1:
+			scoreBoard.Play ("Score2CZoomOut");
+			scoreState = 0;
+			break;
+
+		default:
+			break;
+
+		}
+	}
+
+	public void NewsPopupPlay(){
+
+		switch (newsState)
+		{
+		case 0:
+			newsBoard.Play ("NewsZoomIn");
+			newsButton.transform.SetAsLastSibling();
+			newsState = 1;
+			break;
+
+		case 1:
+			newsBoard.Play ("NewsZoomOut");
+			newsState = 0;
+			break;
+
+		default:
+			break;
+
+		}
+	}
+
+	public void NewsScene3PopupPlay(){
+
+		switch (newsState)
+		{
+		case 0:
+			newsBoard.Play ("NewsBZoomIn");
+			newsButton.transform.SetAsLastSibling();
+			newsState = 1;
+			break;
+
+		case 1:
+			newsBoard.Play ("NewsBZoomOut");
+			newsState = 0;
+			break;
+
+		default:
+			break;
+
+		}
+	}
+
+	public void NewsScene2CPopupPlay(){
+
+		switch (newsState)
+		{
+		case 0:
+			newsBoard.Play ("News2CZoomIn");
+			newsButton.transform.SetAsLastSibling();
+			newsState = 1;
+			break;
+
+		case 1:
+			newsBoard.Play ("News2CZoomOut");
+			newsState = 0;
+			break;
+
+		default:
+			break;
+
+		}
+	}
+
+	public void ResignPopupPlay(){
+
+		switch (newsState)
+		{
+		case 0:
+			newsBoard.Play ("ResignZoomIn");
+			newsButton.transform.SetAsLastSibling ();
+			newsState = 1;
+			//resignImage.SetActive (false);
+			break;
+
+		case 1:
+			newsBoard.Play ("ResignZoomOut");
+			newsState = 0;
+			//StartCoroutine(WaitResignClose());
 			break;
 
 		default:
@@ -506,6 +778,18 @@ public class AnimationManager : MonoBehaviour {
 		yield return new WaitForSeconds(0.5f);
 		StrikeCStart.SetActive (false);
 	}
+
+	IEnumerator WaitBoardPopup(){
+		yield return new WaitForSeconds(1);
+	}
+
+	/*
+	IEnumerator WaitResignClose(){
+		yield return new WaitForSeconds(0.5f);
+		resignImage.SetActive (false);
+	}
+	*/
+
 }
 
 
